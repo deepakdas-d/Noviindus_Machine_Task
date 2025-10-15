@@ -39,6 +39,17 @@ class FeedProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void reset() {
+    selectedVideo = null;
+    selectedImage = null;
+    desc = '';
+    uploadProgress = 0.0;
+    for (var cat in categories) {
+      cat.isSelected = false;
+    }
+    notifyListeners();
+  }
+
   /// Toggle category selection
   void toggleCategory(Category cat) {
     cat.isSelected = !cat.isSelected;
