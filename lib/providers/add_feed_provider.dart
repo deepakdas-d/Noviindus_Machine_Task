@@ -25,8 +25,18 @@ class FeedProvider extends ChangeNotifier {
       }).toList();
       notifyListeners();
     } catch (e) {
-      debugPrint('Error loading categories: $e');
+      debugPrint(' Opps loading categories: $e');
     }
+  }
+
+  void removeVideo() {
+    selectedVideo = null;
+    notifyListeners();
+  }
+
+  void removeImage() {
+    selectedImage = null;
+    notifyListeners();
   }
 
   /// Toggle category selection
