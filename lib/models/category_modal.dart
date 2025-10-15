@@ -2,8 +2,14 @@ class Category {
   final int id;
   final String title;
   final String image;
+  bool isSelected;
 
-  Category({required this.id, required this.title, required this.image});
+  Category({
+    required this.id,
+    required this.title,
+    required this.image,
+    this.isSelected = false,
+  });
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(id: json['id'], title: json['title'], image: json['image']);

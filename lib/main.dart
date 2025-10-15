@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:noviindus/providers/add_feed_provider.dart';
 import 'package:noviindus/providers/category_provider.dart';
 import 'package:noviindus/providers/home_provider.dart';
 import 'package:noviindus/screens/add_feed.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => FeedProvider()),
       ],
       child: const MyApp(),
     ),

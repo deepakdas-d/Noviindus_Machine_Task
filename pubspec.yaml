@@ -19,6 +19,9 @@ dependencies:
   shimmer: ^3.0.0
   video_player: ^2.10.0
   chewie: ^1.13.0
+  dio: ^5.9.0
+  image_picker: ^1.2.0
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:
