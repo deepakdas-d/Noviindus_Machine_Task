@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:noviindus/models/category_modal.dart';
-import 'package:noviindus/models/my_feed_model.dart';
+import 'package:noviindus/models/home_feed_model.dart';
 import 'package:noviindus/services/home_service.dart';
 
-class CategoryProvider with ChangeNotifier {
-  final HomeService apiService = HomeService();
-  List<Category> categories = [];
+class HomeProvider with ChangeNotifier {
+  final HomeService _service = HomeService();
+  List<HomeFeed> _feeds = [];
+  bool _isLoading = false;
+  String? _error;
 
-  Future<void> fetchCategories() async {
-    final response = await apiService.fetchCategories();
-    categories = response.categories;
+  List<HomeFeed> get feeds => _feeds;
+  bool get isLoading => _isLoading;
+  bool get hasError => _error != null;
+  String? get error => _error;
+
+  void clearError() {
+    _error = null;
     notifyListeners();
   }
-}
 
-class MyFeedProvider with ChangeNotifier {
-  final HomeService myFeedService = HomeService();
-  List<Result> _feedResults = [];
-  bool _isLoading = false;
-
-  List<Result> get feeds => _feedResults;
-  bool get isLoading => _isLoading;
-
-  Future<void> fetchMyFeed() async {
+  Future<void> fetchFeeds() async {
     _isLoading = true;
+    _error = null; // Clear previous errors
     notifyListeners();
+
     try {
-      final response = await myFeedService.fetchMyFeed();
-      _feedResults = response.results;
+      _feeds = await _service.fetchHomeFeed();
+      _error = null; // Clear error on success
     } catch (e) {
-      debugPrint("Error fetching feed: $e");
+      _error = 'Failed to load feeds: ${e.toString()}';
+      _feeds = []; // Clear data on error
+      debugPrint('Error fetching home feeds: $e');
     } finally {
       _isLoading = false;
       notifyListeners();
