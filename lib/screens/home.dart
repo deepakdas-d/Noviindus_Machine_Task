@@ -70,6 +70,9 @@ class _HomeState extends State<Home> {
             return Scaffold(
               appBar: AppBar(
                 toolbarHeight: 100,
+                surfaceTintColor:
+                    Colors.transparent, // Prevents dimming on scroll
+                backgroundColor: Colors.blue, // or your color
                 title: RichText(
                   text: const TextSpan(
                     children: [
@@ -110,6 +113,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
+
               body: Stack(
                 children: [
                   RefreshIndicator(

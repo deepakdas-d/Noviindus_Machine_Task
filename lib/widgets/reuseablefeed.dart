@@ -72,10 +72,8 @@ class _ReusableFeedsWidgetState extends State<ReusableFeedsWidget> {
           itemBuilder: (context, index) {
             final feed = widget.feeds.feeds[index];
             return Card(
-              color: Colors.grey[850],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+              color: const Color.fromARGB(255, 46, 45, 45),
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -143,7 +141,12 @@ class _ReusableFeedsWidgetState extends State<ReusableFeedsWidget> {
                                               return Container(
                                                 height: 200,
                                                 width: double.infinity,
-                                                color: Colors.grey[800],
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  11,
+                                                  11,
+                                                  11,
+                                                ),
                                                 child: const Center(
                                                   child:
                                                       CircularProgressIndicator(
