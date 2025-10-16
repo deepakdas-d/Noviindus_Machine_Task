@@ -3,56 +3,56 @@ import 'package:noviindus/models/my_feed_model.dart';
 import 'package:noviindus/services/my_feed_service.dart';
 
 class MyFeedProvider extends ChangeNotifier {
-  final List<Result> _allFeeds = [];
-  final List<Result> _displayedFeeds = [];
-  List<Result> get feeds => _displayedFeeds;
+  final List<Result> _feeds = [];
+  List<Result> get feeds => _feeds;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  int _nextIndex = 0;
-  final int _pageSize = 5;
+  bool _isLoadingMore = false;
+  bool get isLoadingMore => _isLoadingMore;
+
+  String? _nextUrl;
+  final _service = MyFeedService();
 
   Future<void> loadInitialFeeds() async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final feedService = MyFeedService();
-      final response = await feedService.fetchMyFeed(); // List<Result>
-      _allFeeds.clear();
-      _allFeeds.addAll(response); // now response should be List<Result>
-      _displayedFeeds.clear();
-      _nextIndex = 0;
-      _loadMoreChunk();
+      final response = await _service.fetchMyFeed();
+      _feeds
+        ..clear()
+        ..addAll(response.results);
+      _nextUrl = response.next;
     } catch (e) {
-      debugPrint('[MyFeedProvider] Error: $e');
+      debugPrint('[MyFeedProvider] Error loading feeds: $e');
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  void loadMore() {
-    if (_isLoading) return;
-    _loadMoreChunk();
-  }
-
-  void _loadMoreChunk() {
-    final end = (_nextIndex + _pageSize).clamp(0, _allFeeds.length);
-    if (_nextIndex >= _allFeeds.length) return;
-
-    _displayedFeeds.addAll(_allFeeds.getRange(_nextIndex, end));
-    _nextIndex = end;
+  Future<void> loadMoreFeeds() async {
+    if (_isLoadingMore || _nextUrl == null) return;
+    _isLoadingMore = true;
     notifyListeners();
+
+    try {
+      final response = await _service.fetchMyFeed(url: _nextUrl);
+      _feeds.addAll(response.results);
+      _nextUrl = response.next;
+    } catch (e) {
+      debugPrint('[MyFeedProvider] Error loading more: $e');
+    } finally {
+      _isLoadingMore = false;
+      notifyListeners();
+    }
   }
 
-  bool get hasMore => _nextIndex < _allFeeds.length;
-
-  void reset() {
-    _allFeeds.clear();
-    _displayedFeeds.clear();
-    _nextIndex = 0;
-    notifyListeners();
+  Future<void> refreshFeeds() async {
+    await loadInitialFeeds();
   }
+
+  bool get hasMore => _nextUrl != null;
 }
