@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
                 toolbarHeight: 100,
                 surfaceTintColor:
                     Colors.transparent, // Prevents dimming on scroll
-                backgroundColor: Colors.blue, // or your color
+                backgroundColor: Colors.black, // or your color
                 title: RichText(
                   text: const TextSpan(
                     children: [
