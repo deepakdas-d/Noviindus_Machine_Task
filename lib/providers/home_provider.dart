@@ -27,7 +27,7 @@ class HomeProvider with ChangeNotifier {
       _feeds = await _service.fetchHomeFeed();
       _error = null; // Clear error on success
     } catch (e) {
-      _error = 'Failed to load feeds: ${e.toString()}';
+      _error = 'Failed to load feeds:';
       _feeds = []; // Clear data on error
       debugPrint('Error fetching home feeds: $e');
     } finally {

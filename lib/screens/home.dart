@@ -93,6 +93,15 @@ class _HomeState extends State<Home> {
                 ),
                 actions: [
                   IconButton(
+                    icon: const Icon(Icons.person),
+                    color: Colors.white,
+                    iconSize: 30,
+                    tooltip: 'Navigate',
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/myfeed');
+                    },
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.logout, size: 28),
                     tooltip: 'Logout',
                     onPressed: () async {
