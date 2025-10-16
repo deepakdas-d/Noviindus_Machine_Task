@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:noviindus/providers/add_feed_provider.dart';
+import 'package:noviindus/providers/category_provider.dart';
+import 'package:noviindus/providers/home_provider.dart';
+import 'package:noviindus/providers/my_feed_provider.dart';
+import 'package:noviindus/screens/add_feed.dart';
+import 'package:noviindus/screens/my_feed.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 import 'screens/login.dart';
@@ -11,7 +17,13 @@ Future<void> main() async {
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => FeedProvider()),
+        ChangeNotifierProvider(create: (_) => MyFeedProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -47,6 +59,8 @@ class MyApp extends StatelessWidget {
           routes: {
             '/login': (context) => const Login(),
             '/home': (context) => const Home(),
+            '/addfeed': (context) => const AddFeed(),
+            '/myfeed': (context) => const MyFeed(),
           },
           onUnknownRoute: (settings) =>
               MaterialPageRoute(builder: (context) => const Login()),

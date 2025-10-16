@@ -16,6 +16,13 @@ dependencies:
   provider: ^6.1.5+1
   http: ^1.5.0
   shared_preferences: ^2.5.3
+  shimmer: ^3.0.0
+  video_player: ^2.10.0
+  chewie: ^1.13.0
+  dio: ^5.9.0
+  image_picker: ^1.2.0
+  permission_handler: ^12.0.1
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +35,4 @@ flutter:
 
   assets:
     - .env
+    - assets/
