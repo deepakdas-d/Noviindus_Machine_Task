@@ -8,8 +8,7 @@ import 'package:noviindus/models/login_modal.dart';
 class MyFeedService {
   final String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
-  Future<List<Result>> fetchMyFeed() async {
-    final url = Uri.parse('$baseUrl/my_feed');
+  Future<MyFeedResponse> fetchMyFeed({String? url}) async {
     final prefs = await SharedPreferences.getInstance();
     final userData = prefs.getString('user_data');
     if (userData == null) throw Exception('User not logged in');
@@ -17,21 +16,15 @@ class MyFeedService {
     final jsonData = jsonDecode(userData);
     final token = LoginResponse.fromJson(jsonData).accessToken;
 
+    final uri = Uri.parse(url ?? '$baseUrl/my_feed');
     final response = await http.get(
-      url,
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
+      uri,
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      final results = (data['results'] as List)
-          .map((item) => Result.fromJson(item))
-          .toList();
-      return results; // ✅ List<Result>
+      return MyFeedResponse.fromJson(data);
     } else {
       throw Exception('Failed to fetch feed: ${response.statusCode}');
     }

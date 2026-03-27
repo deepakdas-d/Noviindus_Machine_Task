@@ -7,6 +7,7 @@ import '../models/category_modal.dart';
 class FeedProvider extends ChangeNotifier {
   final FeedService _feedService = FeedService();
   final HomeService _homeService = HomeService();
+  BuildContext? context;
 
   List<Category> categories = [];
   File? selectedVideo;
@@ -72,7 +73,8 @@ class FeedProvider extends ChangeNotifier {
   }
 
   /// Submit feed upload
-  Future<void> submitFeed() async {
+  Future<void> submitFeed(BuildContext context) async {
+    // ✅ pass context
     if (selectedVideo == null ||
         selectedImage == null ||
         desc.trim().isEmpty ||
@@ -86,6 +88,7 @@ class FeedProvider extends ChangeNotifier {
 
     try {
       await _feedService.uploadFeed(
+        context: context, // ✅ valid context
         video: selectedVideo!,
         image: selectedImage!,
         desc: desc.trim(),

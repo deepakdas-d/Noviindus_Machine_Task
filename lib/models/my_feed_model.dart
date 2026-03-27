@@ -56,12 +56,12 @@ class Result {
       description: json['description'],
       image: json['image'],
       video: json['video'],
-      likes: json['likes'],
-      dislikes: json['dislikes'],
-      bookmarks: json['bookmarks'],
-      hide: json['hide'],
+      likes: json['likes'] ?? [],
+      dislikes: json['dislikes'] ?? [],
+      bookmarks: json['bookmarks'] ?? [],
+      hide: json['hide'] ?? [],
       createdAt: json['created_at'],
-      follow: json['follow'],
+      follow: json['follow'] ?? false,
       user: User.fromJson(json['user']),
     );
   }

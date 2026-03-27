@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:noviindus/providers/add_feed_provider.dart';
@@ -88,7 +89,7 @@ class AddFeed extends StatelessWidget {
                     ? null
                     : () async {
                         try {
-                          await provider.submitFeed();
+                          await provider.submitFeed(context);
                           provider.reset();
 
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -98,9 +99,10 @@ class AddFeed extends StatelessWidget {
                             ),
                           );
                         } catch (e) {
+                          log('Oops: ${e.toString()}');
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Opps: ${e.toString()}'),
+                              content: Text('Oops: ${e.toString()}'),
                               backgroundColor: const Color.fromARGB(
                                 255,
                                 166,

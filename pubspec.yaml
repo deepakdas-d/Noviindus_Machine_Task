@@ -23,6 +23,7 @@ dependencies:
   image_picker: ^1.2.0
   permission_handler: ^12.0.1
   path: ^1.9.1
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +37,10 @@ flutter:
   assets:
     - .env
     - assets/
+    - assets/icons/
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.jpg"
+  remove_alpha_ios: true
